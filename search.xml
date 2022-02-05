@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>头脑发昏</title>
+    <url>/2022/01/28/%E5%A4%B4%E8%84%91%E5%8F%91%E6%98%8F/</url>
+    <content><![CDATA[<p>记录一些简单但一时没想出来的题。</p>
+<span id="more"></span>
+
+<h3 id="CF1629B-GCD-Arrays"><a href="#CF1629B-GCD-Arrays" class="headerlink" title="CF1629B GCD Arrays"></a>CF1629B GCD Arrays</h3><p>最终剩下的一些数一定有一个共同的质因子。操作可以看做合并质因子，所以每次把不含这个质因子的数合并到含这个质因子的数中肯定最优。</p>
+<p>问题就变成了 $[l,r]$ 中存在某个相同质因子的数最多有几个。因为对于正奇数 $x$ 有 $\gcd(x,x+2)&#x3D;1$，所以这个质因子取 $2$ 即可。</p>
+<h3 id="CF1632C-Strange-Test"><a href="#CF1632C-Strange-Test" class="headerlink" title="CF1632C Strange Test"></a>CF1632C Strange Test</h3><p>因为一次或操作会使得 $a\geq b$，所以最多使用一次或操作，并且之后不会再增加 $a$。</p>
+<p>所以在或操作前后增加 $b$ 是一样的，不妨在或操作前统一加好。</p>
+<p>那么就可以枚举 $b$ 增加了多少，问题就变成了求最小的 $a$，满足二进制位上为 $1$ 的位置是 $b$ 的一个子集。从高位向低位贪心，能不选就不选。</p>
+]]></content>
+      <tags>
+        <tag>总结</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Splay 学习笔记</title>
+    <url>/2022/01/28/Splay-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>势能仅仅是一个调蓄的工具，所以常数的忽略必须和时间开销统一。</p>
+<span id="more"></span>
+
+<p>zig 和 zag 时间开销加势能变化量等于两个结点势能差加一。</p>
+<p>zig-zig 和 zig-zag 时间开销加势能变化量等于两个结点势能差。</p>
+<p>一次 splay 时间开销加势能变化量最多等于最终位置初始位置势能差加一，因为<strong>可能</strong>多出一次 zig 或 zag。</p>
+<p>$m$ 次 splay 时间开销加势能总变化量最多等于 $O(m\log n)$。</p>
+<p>根据势能函数的定义，势能差必然为正，但由于时间开销的存在，势能变化量可正可负，势能总变化量也可正可负。而势能总变化量的绝对值最多等于 $O(n\log n)$，所以总时间开销最多等于 $O((m+n)\log n)$。</p>
+<hr>
+<p>每次查询后旋转到根，就仅仅是增加了常数。</p>
+<p>插入和删除操作最多带来 $O(\log n)$ 的势能变化量，不会影响时间复杂度。</p>
+<hr>
+<p>为了方便把操作的区间夹在根的右子树的左子树，我们一般在 Splay 初始化时插入 $\infty$ 和 $-\infty$。</p>
+<p>对于 Splay，我习惯于在 <code>pushdown</code> 时才更新当前结点的某些信息，所以我就在 <code>pushup</code> 中先 <code>pushdown</code> 左右儿子。</p>
+<p>维护序列时，因为不存在的儿子用 $0$ 表示，所以不进行判断会出问题。拿最大子段和不能选空的情况作为例子，具体地，我们有以下解决方法：</p>
+<ul>
+<li>$0$ 的最大子段和置为 $-\infty$，避免选空。</li>
+<li>最两侧结点（即一开始插入的两个）的值置为 $-\infty$，避免单独被选成最大子段和。</li>
+<li>有了 $0$ 的特殊性，所以不能对它 <code>pushdown</code> 或者 <code>pushup</code>，在一些地方要注意一下。</li>
+</ul>
+<hr>
+<p><a href="https://cs.au.dk/~gerth/papers/finger05.pdf">原论文</a></p>
+<p>部分结论摘要：</p>
+<ul>
+<li>Splay 是 Dynamic Finger Search Tree，访问的均摊时间复杂度为 $O(\log d(finger_{i-1},finger_i))$，其中 $d$ 表示排名之差。</li>
+<li>合并两棵大小分别为 $n,m(n\leq m)$ 的 Dynamic Finger Search Tree 的时间复杂度为 $O(n\log\frac{m}{n})$。具体合并方法为将较小树中元素从小到大或从大到小加入较大树。</li>
+<li>按任意顺序将 $n$ 个元素合并成一棵 Dynamic Finger Search Tree 的时间复杂度为 $O(n\log n)$。除了归纳证明外我们还可以考虑每个元素合并时被加入的贡献 $O(\sum_{i&#x3D;2}^k\frac{s_i}{s_{i-1}})&#x3D;O(\log n)$，其中 $s_{i-1}$ 和 $s_i$ 表示该元素在第 $i-1$ 次被加入时较小和较大树的大小。</li>
+</ul>
+<hr>
+<p>加入分裂一个区间的操作，仍然最多带来 $O(\log n)$ 的势能变化量。</p>
+<p>但合并时暴力加入会导致时间复杂度变成 $O(nm)$。不妨每次判断当前极值是否存在，存在就直接加入，否则就分裂出一棵可以直接插入的子树插入。用每个元素和相邻元素差的对数作为势能函数，如果一个间隔在合并的时候被分裂开，肯定有一边与相邻元素的差减半。这样至少是 $O((m+n)\log^2 n)$ 的，不知道用 Finger Search 分析能否更优。</p>
+]]></content>
+      <tags>
+        <tag>Splay</tag>
+        <tag>总结</tag>
+      </tags>
+  </entry>
+</search>
