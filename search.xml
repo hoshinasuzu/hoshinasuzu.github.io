@@ -1,6 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>CF1468I Plane Tiling</title>
+    <url>/2022/02/09/CF1468I-Plane-Tiling/</url>
+    <content><![CDATA[<span id="more"></span>
+
+<p>向量对称是没有关系的，所以可以将两个 $x$ 坐标或两个 $y$ 坐标调整成非负数，以下默认如此。</p>
+<p>以 $(0,0)$ 作为一角的两向量合成的平行四边形作为底块覆盖整个平面。</p>
+<p>容易发现平行四边形内部和邻边上的点（不包含四个顶点）是无法互相到达的，外加顶点，就能拓展到整个平面。</p>
+<p>根据皮克定理 $S&#x3D;n+\frac{s}{2}-1$，容易发现这些点是数量就是平行四边形的面积，这样是否存在解就可以直接判断了。但如果用计算几何去找出这些点会被卡精度。</p>
+<p>不妨钦定起点为 $(0,0)$ 然后往平行原坐标轴的方向走，遇到相同的边就记录一下<strong>对应到原坐标系、与走的方向垂直的相对位置</strong>。</p>
+<p>观察它们与一侧顶点的距离，显然可以表示成 $ax_1+bx_2$ 或是 $ay_1+by_2$，并且是一步一步变化的。如果将每种距离都取到恰好一次，就恰好拼成了一个平行四边形，也就找出了解。</p>
+<p>根据裴蜀定理，只要将初始的一个点增加至 $\gcd(x_1,x_2)$ 或 $\gcd(y_1,y_2)$ 个点即可。</p>
+<p>也就是说任意一个边长为 $\gcd(x_1,x_2)$ 或 $\gcd(y_1,y_2)$ 的面积为 $n$ 的点矩形（不能旋转九十度）都可为解。</p>
+]]></content>
+      <tags>
+        <tag>计算几何</tag>
+        <tag>构造</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>普通线段树时间复杂度分析</title>
+    <url>/2022/02/08/%E6%99%AE%E9%80%9A%E7%BA%BF%E6%AE%B5%E6%A0%91%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<p>转转表示一脸懵逼。</p>
+<span id="more"></span>
+
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> p,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> ql,<span class="keyword">int</span> qr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	++cnt;</span><br><span class="line">	<span class="keyword">if</span>(ql&lt;=l&amp;&amp;r&lt;=qr)<span class="keyword">return</span> val[p];</span><br><span class="line">	<span class="keyword">int</span> mid=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(qr&lt;=mid)<span class="keyword">return</span> <span class="built_in">query</span>(ls,l,mid,ql,qr);</span><br><span class="line">	<span class="keyword">if</span>(ql&gt;mid)<span class="keyword">return</span> <span class="built_in">query</span>(rs,mid+<span class="number">1</span>,r,ql,qr);</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">max</span>(<span class="built_in">query</span>(ls,l,mid,ql,qr),<span class="built_in">query</span>(rs,mid+<span class="number">1</span>,r,ql,qr));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>称单个线段树结点管辖的范围为直接区间，函数会在区间的 $O(\log n)$ 个极大直接区间处返回。</p>
+<p>最后一句话每执行一次都会将返回分为两部分，而另外两句话舍去的空区间同样也是全局除查询区间外的极大直接区间。</p>
+<p>所以单次查询的时间复杂度为 $O(\log n)$。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Max(x,y)((x)&gt;(y)?x:y)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> p,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> ql,<span class="keyword">int</span> qr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	++cnt;</span><br><span class="line">	<span class="keyword">if</span>(ql&lt;=l&amp;&amp;r&lt;=qr)<span class="keyword">return</span> val[p];</span><br><span class="line">	<span class="keyword">int</span> mid=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(qr&lt;=mid)<span class="keyword">return</span> <span class="built_in">query</span>(ls,l,mid,ql,qr);</span><br><span class="line">	<span class="keyword">if</span>(ql&gt;mid)<span class="keyword">return</span> <span class="built_in">query</span>(rs,mid+<span class="number">1</span>,r,ql,qr);</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">Max</span>(<span class="built_in">query</span>(ls,l,mid,ql,qr),<span class="built_in">query</span>(rs,mid+<span class="number">1</span>,r,ql,qr));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意到取最大值变成了宏定义，最值取到的调用会被递归两次。</p>
+<p>补齐成为二的幂次，多出来的位置看做插入线段树底层，<strong>不会影响到上层结构</strong>就没有问题了。</p>
+<p>以极大直接区间作为自变量，$T(n)&#x3D;2T(n-1)+O(1)&#x3D;O(2^n)$。</p>
+<p>但极大直接区间数量的常数跑到了最终时间复杂度的指数那里。把最大的具体数量写一写：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 2 3 4 5 6 7 8 9 10 ...</span><br><span class="line">1 2 2 3 3 4 3 4 4 5  ...</span><br></pre></td></tr></table></figure>
+
+<p>看不出来。</p>
+<p>虽然最大极大直接区间可能存在两个，但一旦分成两半递归后一侧就会一直是长度大于一半的最大极大直接区间，所以最坏就是最大值取在端点。</p>
+<p>以区间长度作为自变量，$T(n)&#x3D;2T(n&#x2F;2)+O(1)&#x3D;O(n)$。</p>
+]]></content>
+      <tags>
+        <tag>线段树</tag>
+        <tag>总结</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>头脑发昏</title>
+    <url>/2022/01/28/%E5%A4%B4%E8%84%91%E5%8F%91%E6%98%8F/</url>
+    <content><![CDATA[<p>记录一些简单但一时没想出来的题。</p>
+<span id="more"></span>
+
+<h3 id="CF1629B-GCD-Arrays"><a href="#CF1629B-GCD-Arrays" class="headerlink" title="CF1629B GCD Arrays"></a>CF1629B GCD Arrays</h3><p>最终剩下的一些数一定有一个共同的质因子。操作可以看做合并质因子，所以每次把不含这个质因子的数合并到含这个质因子的数中肯定最优。</p>
+<p>问题就变成了 $[l,r]$ 中存在某个相同质因子的数最多有几个。因为对于正奇数 $x$ 有 $\gcd(x,x+2)&#x3D;1$，所以这个质因子取 $2$ 即可。</p>
+<h3 id="CF1632C-Strange-Test"><a href="#CF1632C-Strange-Test" class="headerlink" title="CF1632C Strange Test"></a>CF1632C Strange Test</h3><p>因为一次或操作会使得 $a\geq b$，所以最多使用一次或操作，并且之后不会再增加 $a$。</p>
+<p>所以在或操作前后增加 $b$ 是一样的，不妨在或操作前统一加好。</p>
+<p>那么就可以枚举 $b$ 增加了多少，问题就变成了求最小的 $a$，满足二进制位上为 $1$ 的位置是 $b$ 的一个子集。从高位向低位贪心，能不选就不选。</p>
+]]></content>
+      <tags>
+        <tag>总结</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Splay 学习笔记</title>
     <url>/2022/01/28/Splay-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<p>势能仅仅是一个调蓄的工具，所以常数的忽略必须和时间开销统一。</p>
@@ -36,52 +99,8 @@
 <p>但合并时暴力加入会导致时间复杂度变成 $O(nm)$。不妨每次判断当前极值是否存在，存在就直接加入，否则就分裂出一棵可以直接插入的子树插入。用每个元素和相邻元素差的对数作为势能函数，如果一个间隔在合并的时候被分裂开，肯定有一边与相邻元素的差减半。这样至少是 $O((m+n)\log^2 n)$ 的，不知道用 Finger Search 分析能否更优。</p>
 ]]></content>
       <tags>
+        <tag>总结</tag>
         <tag>Splay</tag>
-        <tag>总结</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>头脑发昏</title>
-    <url>/2022/01/28/%E5%A4%B4%E8%84%91%E5%8F%91%E6%98%8F/</url>
-    <content><![CDATA[<p>记录一些简单但一时没想出来的题。</p>
-<span id="more"></span>
-
-<h3 id="CF1629B-GCD-Arrays"><a href="#CF1629B-GCD-Arrays" class="headerlink" title="CF1629B GCD Arrays"></a>CF1629B GCD Arrays</h3><p>最终剩下的一些数一定有一个共同的质因子。操作可以看做合并质因子，所以每次把不含这个质因子的数合并到含这个质因子的数中肯定最优。</p>
-<p>问题就变成了 $[l,r]$ 中存在某个相同质因子的数最多有几个。因为对于正奇数 $x$ 有 $\gcd(x,x+2)&#x3D;1$，所以这个质因子取 $2$ 即可。</p>
-<h3 id="CF1632C-Strange-Test"><a href="#CF1632C-Strange-Test" class="headerlink" title="CF1632C Strange Test"></a>CF1632C Strange Test</h3><p>因为一次或操作会使得 $a\geq b$，所以最多使用一次或操作，并且之后不会再增加 $a$。</p>
-<p>所以在或操作前后增加 $b$ 是一样的，不妨在或操作前统一加好。</p>
-<p>那么就可以枚举 $b$ 增加了多少，问题就变成了求最小的 $a$，满足二进制位上为 $1$ 的位置是 $b$ 的一个子集。从高位向低位贪心，能不选就不选。</p>
-]]></content>
-      <tags>
-        <tag>总结</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>普通线段树时间复杂度分析</title>
-    <url>/2022/02/08/%E6%99%AE%E9%80%9A%E7%BA%BF%E6%AE%B5%E6%A0%91%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90/</url>
-    <content><![CDATA[<p>转转表示一脸懵逼。</p>
-<span id="more"></span>
-
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> p,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> ql,<span class="keyword">int</span> qr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	++cnt;</span><br><span class="line">	<span class="keyword">if</span>(ql&lt;=l&amp;&amp;r&lt;=qr)<span class="keyword">return</span> val[p];</span><br><span class="line">	<span class="keyword">int</span> mid=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(qr&lt;=mid)<span class="keyword">return</span> <span class="built_in">query</span>(ls,l,mid,ql,qr);</span><br><span class="line">	<span class="keyword">if</span>(ql&gt;mid)<span class="keyword">return</span> <span class="built_in">query</span>(rs,mid+<span class="number">1</span>,r,ql,qr);</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">max</span>(<span class="built_in">query</span>(ls,l,mid,ql,qr),<span class="built_in">query</span>(rs,mid+<span class="number">1</span>,r,ql,qr));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>称单个线段树结点管辖的范围为直接区间，函数会在区间的 $O(\log n)$ 个极大直接区间处返回。</p>
-<p>最后一句话每执行一次都会将返回分为两部分，而另外两句话舍去的空区间同样也是全局除查询区间外的极大直接区间。</p>
-<p>所以单次查询的时间复杂度为 $O(\log n)$。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> Max(x,y)((x)&gt;(y)?x:y)</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> p,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> ql,<span class="keyword">int</span> qr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	++cnt;</span><br><span class="line">	<span class="keyword">if</span>(ql&lt;=l&amp;&amp;r&lt;=qr)<span class="keyword">return</span> val[p];</span><br><span class="line">	<span class="keyword">int</span> mid=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span>(qr&lt;=mid)<span class="keyword">return</span> <span class="built_in">query</span>(ls,l,mid,ql,qr);</span><br><span class="line">	<span class="keyword">if</span>(ql&gt;mid)<span class="keyword">return</span> <span class="built_in">query</span>(rs,mid+<span class="number">1</span>,r,ql,qr);</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">Max</span>(<span class="built_in">query</span>(ls,l,mid,ql,qr),<span class="built_in">query</span>(rs,mid+<span class="number">1</span>,r,ql,qr));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>注意到取最大值变成了宏定义，最值取到的调用会被递归两次。</p>
-<p>补齐成为二的幂次，多出来的位置看做插入线段树底层，<strong>不会影响到上层结构</strong>就没有问题了。</p>
-<p>以极大直接区间作为自变量，$T(n)&#x3D;2T(n-1)+O(1)&#x3D;O(2^n)$。</p>
-<p>但极大直接区间数量的常数跑到了最终时间复杂度的指数那里。把最大的具体数量写一写：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 2 3 4 5 6 7 8 9 10 ...</span><br><span class="line">1 2 2 3 3 4 3 4 4 5  ...</span><br></pre></td></tr></table></figure>
-
-<p>看不出来。</p>
-<p>虽然最大极大直接区间可能存在两个，但一旦分成两半递归后一侧就会一直是长度大于一半的最大极大直接区间，所以最坏就是最大值取在端点。</p>
-<p>以区间长度作为自变量，$T(n)&#x3D;2T(n&#x2F;2)+O(1)&#x3D;O(n)$。</p>
-]]></content>
-      <tags>
-        <tag>总结</tag>
-        <tag>线段树</tag>
       </tags>
   </entry>
 </search>
