@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>CF27E Number With The Given Amount Of Divisors</title>
+    <url>/2022/02/15/CF27E-Number-With-The-Given-Amount-Of-Divisors/</url>
+    <content><![CDATA[<p>前置芝士：反素数。</p>
+<span id="more"></span>
+
+<p>显然答案不是单调递增的。</p>
+<p>直接暴力递推，枚举新加入某个质因子多少个，时间复杂度 $O(n^3\times p)$，其中 $p$ 表示用到的质数数量，具体级别不清楚但肯定很小。</p>
+<p>根本跑不满，所以直接就过了。</p>
+]]></content>
+      <tags>
+        <tag>素数</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CF1468I Plane Tiling</title>
     <url>/2022/02/09/CF1468I-Plane-Tiling/</url>
-    <content><![CDATA[<span id="more"></span>
+    <content><![CDATA[<p>向量对称是没有关系的，所以可以将两个 $x$ 坐标或两个 $y$ 坐标调整成非负数，以下默认如此。</p>
+<span id="more"></span>
 
-<p>向量对称是没有关系的，所以可以将两个 $x$ 坐标或两个 $y$ 坐标调整成非负数，以下默认如此。</p>
 <p>以 $(0,0)$ 作为一角的两向量合成的平行四边形作为底块覆盖整个平面。</p>
 <p>容易发现平行四边形内部和邻边上的点（不包含四个顶点）是无法互相到达的，外加顶点，就能拓展到整个平面。</p>
 <p>根据皮克定理 $S&#x3D;n+\frac{s}{2}-1$，容易发现这些点是数量就是平行四边形的面积，这样是否存在解就可以直接判断了。但如果用计算几何去找出这些点会被卡精度。</p>
