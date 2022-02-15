@@ -1,6 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>基础数论学习笔记</title>
+    <url>/2022/02/15/%E5%9F%BA%E7%A1%80%E6%95%B0%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>啥都不会。</p>
+<span id="more"></span>
+
+<h2 id="最大公约数"><a href="#最大公约数" class="headerlink" title="最大公约数"></a>最大公约数</h2><p>辗转相除法（欧几里得算法）是更相减损术的优化，原理就是相减后最大公约数不会改变，过于显然，没必要设出来说明。</p>
+<h2 id="最小公倍数"><a href="#最小公倍数" class="headerlink" title="最小公倍数"></a>最小公倍数</h2><p><strong>容斥</strong>，两数之积除以两数的最大公约数。</p>
+<p>tips：若数以质因数分解的形式给出，算最大公约数系数取 $\min$，算最小公倍数系数取 $\max$。</p>
+<h2 id="拓展欧几里得算法"><a href="#拓展欧几里得算法" class="headerlink" title="拓展欧几里得算法"></a>拓展欧几里得算法</h2><p>求不定方程 $ax+by&#x3D;\gcd(a,b)$ 的任意一个整数解。</p>
+<p>令 $a\leq b,b&gt;0$，假设我们当前已经求出了不定方程</p>
+<p>$$b\bmod a\times x+ay&#x3D;\gcd(b\bmod a,a)$$</p>
+<p>的一组整数解 $x&#x3D;x’,y&#x3D;y’$，根据最大公约数的性质有</p>
+<p>$$b\bmod a\times x’+ay’&#x3D;\gcd(a,b)$$</p>
+<p>把取模换掉</p>
+<p>$$\left(b-\left\lfloor\frac{b}{a}\right\rfloor a\right)x’+ay’&#x3D;\gcd(a,b)$$</p>
+<p>整理成最初的形式</p>
+<p>$$a\left(y’-\left\lfloor\frac{b}{a}\right\rfloor x’\right)+bx’&#x3D;\gcd(a,b)$$</p>
+<p>那么 $x&#x3D;y’-\lfloor\frac{b}{a}\rfloor x’,y&#x3D;x’$ 就是不定方程 $ax+by&#x3D;\gcd(a,b)$ 的一组整数解。</p>
+<p>递归求解的终止条件是 $a&#x3D;0$，此时 $x&#x3D;0,y&#x3D;1$ 是一组解。在返回这组解的前提下，我们可以归纳出解的范围。</p>
+<p>假设递归得到 $-b\bmod a\leq y’\leq b\bmod a,-a\leq x’\leq a$。</p>
+<p>取 $y’&#x3D;b\bmod a,x’&#x3D;-a$ 有 $x\leq b\bmod a+b-b\bmod a&#x3D;b,y\geq-a$。</p>
+<p>取 $y’&#x3D;-b\bmod a,x’&#x3D;a$ 有 $x\geq-b\bmod a-b+b\bmod a&#x3D;-b,y\leq a$。</p>
+<p><strong>容易发现递归最底层也就是 $\boldsymbol{a&#x3D;0}$ 的情况比较特殊，假设是不可能成立的，但递归到上一层就一定成立了。</strong>所以当 $a&gt;0$ 时 exgcd 求出的不定方程 $ax+by&#x3D;\gcd(a,b)$ 的解 $x,y$ 满足 $x\in[-b,b],y\in[-a,a]$。</p>
+<h2 id="欧拉函数"><a href="#欧拉函数" class="headerlink" title="欧拉函数"></a>欧拉函数</h2><p>$\phi(n)$ 表示小于等于 $n$ 的与 $n$ 互质的数的个数，所以 $\phi(1)&#x3D;1$。</p>
+<p>当 $n$ 为质数时，$\phi(n)&#x3D;n-1$。</p>
+<h3 id="求单个数的欧拉函数"><a href="#求单个数的欧拉函数" class="headerlink" title="求单个数的欧拉函数"></a>求单个数的欧拉函数</h3><p>由唯一分解定理，设 $n&#x3D;\Pi_{i&#x3D;1}^s p_i^{k_i}$。然后对于质因子容斥，可以发现容斥式就是 $n\Pi_{i&#x3D;1}^s\frac{p_i-1}{p_i}$ 的展开式。</p>
+<p>在分解质因数的时候直接计算即可。</p>
+<h2 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h2><p>设 $a,p\in\mathbb{N^+}$，$p$ 是质数，且满足 $\gcd(a,p)&#x3D;1$，则有 $a^{p-1}\equiv 1\pmod p$。</p>
+<h3 id="引理-1"><a href="#引理-1" class="headerlink" title="引理 1"></a>引理 1</h3><p>对于任意三个正整数 $a,b,c$ 满足 $\gcd(c,m)&#x3D;1$，若 $ac\equiv bc\pmod m$，则 $a\equiv b\pmod m$。</p>
+<p>移项变成 $c(a-b)\equiv 0\pmod m$ 后，因为互质所以只能是 $a-b\equiv 0\pmod m$。</p>
+<h3 id="引理-2"><a href="#引理-2" class="headerlink" title="引理 2"></a>引理 2</h3><p>若 $\{a_1,\cdots,a_m\}$ 是模 $m$ 的一个完全剩余系，整数 $b$ 满足 $\gcd(b,m)&#x3D;1$，那么 $\{a_1b,\cdots,a_mb\}$ 也是模 $m$ 的一个完全剩余系。</p>
+<p>反证，如果存在 $a_ib\equiv a_jb\pmod m$，根据引理 1 可得 $a_i\equiv a_j\pmod m$，不符合完全剩余系的定义。</p>
+<h3 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h3><p>构造模 $p$ 的一个完全剩余系 $\{0,1,2,\cdots,p-1\}$。</p>
+<p>根据引理 2 可得 $\{0,a,2a,\cdots,(p-1)a\}$ 也是模 $p$ 的一个完全剩余系。</p>
+<p>一一对应可得 $1\times 2\times 3\times\cdots\times(p-1)\equiv a\times 2a\times\cdots\times(p-1)a\pmod p$。</p>
+<p>即 $(p-1)!\equiv(p-1)!\times a^{p-1}\pmod p$。</p>
+<p>显然 $\gcd(p,(p-1)!)&#x3D;1$，根据引理 1 即可证毕。</p>
+<h2 id="欧拉定理"><a href="#欧拉定理" class="headerlink" title="欧拉定理"></a>欧拉定理</h2><p>设 $a,n\in\mathbb{N^+}$ 且满足 $\gcd(a,n)$，则有 $a^{\phi(n)}\equiv 1\pmod n$。</p>
+<p>容易看出费马小定理其实是欧拉定理的特殊情况。</p>
+<p>首先两个与 $n$ 互质的数的乘积仍然与 $n$ 互质。</p>
+<p>所以把费马小定理证明里面的完全剩余系换成与 $n$ 互质的剩余系即可。</p>
+<h2 id="乘法逆元"><a href="#乘法逆元" class="headerlink" title="乘法逆元"></a>乘法逆元</h2><blockquote>
+<p>乘法逆元，是指数学领域群 $G$ 中任意一个元素 $a$，都在 $G$ 中有<strong>唯一</strong>的逆元 $a’$，具有性质 $a\times a’&#x3D;a’\times a&#x3D;e$，其中 $e$ 为该群的单位元。</p>
+<p>单位元是集合里的一种特别的元，与该集合里的运算有关。当它和其他元素结合时，并不会改变那些元素。</p>
+</blockquote>
+<p>所以在模域下的乘法中，单位元就是 $1$。</p>
+<p>具体地，若 $a\times b\equiv 1\pmod p$，则称 $b$ 是 $a$ 在模 $p$ 意义下的乘法逆元，记作 $a^{-1}$，即 $b\equiv\frac{1}{a}\pmod p$。</p>
+<p>可以写成 $a\times b+p\times q&#x3D;1$ 的形式，根据裴蜀定理只有 $a$ 与 $p$ 互质时才有解，这也就是乘法逆元存在的条件。</p>
+<p>在求 $\frac{y}{x}$ 时我们可以先求出 $\frac{1}{x}$ 再乘上 $y$。</p>
+<h3 id="费马小定理求单个数的乘法逆元"><a href="#费马小定理求单个数的乘法逆元" class="headerlink" title="费马小定理求单个数的乘法逆元"></a>费马小定理求单个数的乘法逆元</h3><p>只能解决 $p$ 是质数的情况。</p>
+<p>$$a\times b\equiv 1\pmod p$$</p>
+<p>$$a\times b\equiv a^{p-1}\pmod p$$</p>
+<p>$$b\equiv a^{p-2}\pmod p$$</p>
+<h3 id="欧拉定理求单个数的乘法逆元"><a href="#欧拉定理求单个数的乘法逆元" class="headerlink" title="欧拉定理求单个数的乘法逆元"></a>欧拉定理求单个数的乘法逆元</h3><p>需要事先求出 $\phi(a)$。</p>
+<p>$$a\times b\equiv 1\pmod p$$</p>
+<p>$$a\times b\equiv a^{\phi(a)}\pmod p$$</p>
+<p>$$b\equiv a^{\phi(a)-1}\pmod p$$</p>
+<h3 id="前缀积求一堆数的乘法逆元"><a href="#前缀积求一堆数的乘法逆元" class="headerlink" title="前缀积求一堆数的乘法逆元"></a>前缀积求一堆数的乘法逆元</h3><p>在求组合数时我们常常会需要求阶乘的逆元。</p>
+<p>先用上面的方法求出 $n!$ 的逆元，然后考虑倒着递推，从 $i$ 推到 $i-1$：</p>
+<p>$$\frac{1}{(i-1)!}\equiv\frac{1}{i!}\times i\pmod p$$</p>
+<p>再深入思考一下你会发现：</p>
+<p>$$\frac{1}{i!}\times(i-1)!\equiv\frac{1}{i}\pmod p$$</p>
+<p>这样就做到了线性求 $1\sim n$ 的逆元。</p>
+<p>最后将 $i$ 替换成 $a_i$ 就行了。</p>
+<h2 id="威尔逊定理"><a href="#威尔逊定理" class="headerlink" title="威尔逊定理"></a>威尔逊定理</h2><p>$&gt;1$ 的整数 $p$ 满足 $(p-1)!\equiv-1\pmod p$ 的充分必要条件是 $p$ 为质数。</p>
+<h3 id="充分性"><a href="#充分性" class="headerlink" title="充分性"></a>充分性</h3><p>两边同除以 $p-1$ 得到 $(p-2)!\equiv 1\pmod p$。</p>
+<p>考虑逆元为其本身的数，可以发现只有 $1$ 和 $p-1$。</p>
+<p>所以 $2\sim p-2$ 的逆元组成的集合同样为 $2\sim p-2$，可以两两划分成乘积为 $1$ 的组。</p>
+<h3 id="必要性"><a href="#必要性" class="headerlink" title="必要性"></a>必要性</h3><p>如果 $p$ 不为质数，那么可以将 $p$ 表示成 $a\times b(1&lt;a,b&lt;p)$。</p>
+<p>当 $a&#x3D;b$ 时，发现 $p&#x3D;4$ 符合，$p\geq 9$ 时 $a&lt;2a&lt;p-1$。</p>
+<p>那么除了 $p&#x3D;4$ 以外 $(p-1)!$ 一定存在因子 $p$，所以 $(p-1)!\equiv 0\pmod p$。</p>
+]]></content>
+      <tags>
+        <tag>素数</tag>
+        <tag>数论</tag>
+        <tag>总结</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CF27E Number With The Given Amount Of Divisors</title>
     <url>/2022/02/15/CF27E-Number-With-The-Given-Amount-Of-Divisors/</url>
     <content><![CDATA[<p>前置芝士：反素数。</p>
@@ -115,8 +194,8 @@
 <p>但合并时暴力加入会导致时间复杂度变成 $O(nm)$。不妨每次判断当前极值是否存在，存在就直接加入，否则就分裂出一棵可以直接插入的子树插入。用每个元素和相邻元素差的对数作为势能函数，如果一个间隔在合并的时候被分裂开，肯定有一边与相邻元素的差减半。这样至少是 $O((m+n)\log^2 n)$ 的，不知道用 Finger Search 分析能否更优。</p>
 ]]></content>
       <tags>
-        <tag>总结</tag>
         <tag>Splay</tag>
+        <tag>总结</tag>
       </tags>
   </entry>
 </search>
