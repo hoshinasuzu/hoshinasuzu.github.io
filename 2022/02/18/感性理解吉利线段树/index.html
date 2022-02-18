@@ -20,15 +20,21 @@
     var CONFIG = {"hostname":"hoshinasuzu.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="美食殿堂">
-<meta property="og:url" content="https://hoshinasuzu.github.io/tags/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/index.html">
+  <meta name="description" content="吉老师也没那么牛逼。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="感性理解吉利线段树">
+<meta property="og:url" content="https://hoshinasuzu.github.io/2022/02/18/%E6%84%9F%E6%80%A7%E7%90%86%E8%A7%A3%E5%90%89%E5%88%A9%E7%BA%BF%E6%AE%B5%E6%A0%91/index.html">
 <meta property="og:site_name" content="美食殿堂">
+<meta property="og:description" content="吉老师也没那么牛逼。">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-02-18T11:10:51.000Z">
+<meta property="article:modified_time" content="2022-02-18T16:07:36.523Z">
 <meta property="article:author" content="御坂">
+<meta property="article:tag" content="总结">
+<meta property="article:tag" content="线段树">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://hoshinasuzu.github.io/tags/%E8%AE%A1%E7%AE%97%E5%87%A0%E4%BD%95/">
+<link rel="canonical" href="https://hoshinasuzu.github.io/2022/02/18/%E6%84%9F%E6%80%A7%E7%90%86%E8%A7%A3%E5%90%89%E5%88%A9%E7%BA%BF%E6%AE%B5%E6%A0%91/">
 
 
 <script id="page-configurations">
@@ -36,12 +42,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: 计算几何 | 美食殿堂</title>
+  <title>感性理解吉利线段树 | 美食殿堂</title>
   
 
 
@@ -174,57 +180,141 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hoshinasuzu.github.io/2022/02/18/%E6%84%9F%E6%80%A7%E7%90%86%E8%A7%A3%E5%90%89%E5%88%A9%E7%BA%BF%E6%AE%B5%E6%A0%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://s2.loli.net/2022/02/05/ewYjM65qLtfk47d.png">
+      <meta itemprop="name" content="御坂">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="美食殿堂">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          感性理解吉利线段树
+        </h1>
+
+        <div class="post-meta">
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-02-18 19:10:51" itemprop="dateCreated datePublished" datetime="2022-02-18T19:10:51+08:00">2022-02-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-19 00:07:36" itemprop="dateModified" datetime="2022-02-19T00:07:36+08:00">2022-02-19</time>
+              </span>
+
+          
+            <span id="/2022/02/18/%E6%84%9F%E6%80%A7%E7%90%86%E8%A7%A3%E5%90%89%E5%88%A9%E7%BA%BF%E6%AE%B5%E6%A0%91/" class="post-meta-item leancloud_visitors" data-flag-title="感性理解吉利线段树" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
   
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">计算几何
-          <small>标签</small>
-        </h2>
-      </div>
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2022/02/18/%E6%84%9F%E6%80%A7%E7%90%86%E8%A7%A3%E5%90%89%E5%88%A9%E7%BA%BF%E6%AE%B5%E6%A0%91/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2022/02/18/%E6%84%9F%E6%80%A7%E7%90%86%E8%A7%A3%E5%90%89%E5%88%A9%E7%BA%BF%E6%AE%B5%E6%A0%91/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>331</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2022</span>
+        <p>吉老师也没那么牛逼。</p>
+<span id="more"></span>
+
+<p>对于一次区间对 $x$ 取 $\max$ 的操作，只有<strong>相邻（去除大于等于 $\boldsymbol x$ 的）的不相同的</strong>小于 $x$ 的数才会增加时间开销，然后这些数就被<strong>推平</strong>了。</p>
+<p>也就是说线段树结构允许我们<strong>忽略</strong>大于 $x$ 的数。</p>
+<p>按高度分层，增加时间开销的相邻位置数量可以看做较高层插入最低层的贡献。</p>
+<p>如果某些较高层已经被取 $\max$ 过了，那么对应连续段中间是没有贡献的，两端必然对应着一次操作，也就是颜色段均摊。</p>
+<p>加上区间加操作。</p>
+<p>考虑最低层是什么。如果中间某段是由这个最低层抬高上去的，好像会多出两次贡献。但其实这两次贡献原本是摊到两侧的段上的，所以实际贡献并没有变。</p>
+<p>如果不是，那原先就有贡献，只是贡献的方向有可能会反一下。</p>
+<p>其余操作同理，所以都是一只 $\log$ 的。</p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-02-09T23:32:06+08:00"
-              content="2022-02-09">
-          02-09
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%80%BB%E7%BB%93/" rel="tag"># 总结</a>
+              <a href="/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/" rel="tag"># 线段树</a>
+          </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/02/09/CF1468I-Plane-Tiling/" itemprop="url">
-            <span itemprop="name">CF1468I Plane Tiling</span>
-          </a>
-      </div>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/15/%E5%9F%BA%E7%A1%80%E6%95%B0%E8%AE%BA%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="基础数论学习笔记">
+      <i class="fa fa-chevron-left"></i> 基础数论学习笔记
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
   </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
 
           </div>
           
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
